@@ -8,17 +8,15 @@ export interface Token {
   token_ticker: string;
   price_sol: number;
   market_cap_sol: number;
-  market_cap_change_24h?: number;
+  market_cap_change_24h?: number | undefined;
   liquidity_sol: number;
   volume_sol: number;
   transaction_count: number;
   buys_24h?: number;
   sells_24h?: number;
   price_1hr_change: number;
-  holders?: number;
-  buy_tax?: number;
-  sell_tax?: number;
-  pair_created_at?: string;
+  holders?: number | undefined;
+  pair_created_at?: string | undefined;
   protocol: string;
   source: string;
 }
