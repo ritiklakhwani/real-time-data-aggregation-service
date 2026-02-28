@@ -28,19 +28,24 @@ export function mergeTokens(
       token_ticker: jupiter.token_ticker ?? dex.token_ticker,
       price_sol: useDexPrice ? dex.price_sol : jupiter.price_sol,
       market_cap_sol: useDexPrice ? dex.market_cap_sol : jupiter.market_cap_sol,
-      market_cap_change_24h: useDexPrice
-        ? dex.market_cap_change_24h
-        : jupiter.market_cap_change_24h,
-      liquidity_sol: (dex.liquidity_sol ?? 0) + (jupiter.liquidity_sol ?? 0),
-      volume_sol: (dex.volume_sol ?? 0) + (jupiter.volume_sol ?? 0),
-      transaction_count:
-        (dex.transaction_count ?? 0) + (jupiter.transaction_count ?? 0),
-      buys_24h: (dex.buys_24h ?? 0) + (jupiter.buys_24h ?? 0),
-      sells_24h: (dex.sells_24h ?? 0) + (jupiter.sells_24h ?? 0),
-      price_1hr_change: useDexPrice
-        ? dex.price_1hr_change
-        : jupiter.price_1hr_change,
-      holders: jupiter.holders,
+      liquidity_sol: useDexPrice ? (dex.liquidity_sol ?? 0) : (jupiter.liquidity_sol ?? 0),
+      stats_5m: {
+        transactions:useDexPrice ? dex.stats_5m.transactions : jupiter.stats_5m.transactions ,
+        volume: useDexPrice ? dex.stats_5m.volume : jupiter.stats_5m.volume ,
+      },
+      stats_1hr: {
+        transactions:useDexPrice ? dex.stats_1hr.transactions : jupiter.stats_1hr.transactions ,
+        volume: useDexPrice ? dex.stats_1hr.volume : jupiter.stats_1hr.volume ,
+      },
+      stats_6hr: {
+        transactions:useDexPrice ? dex.stats_6hr.transactions : jupiter.stats_6hr.transactions ,
+        volume: useDexPrice ? dex.stats_6hr.volume : jupiter.stats_6hr.volume ,
+      },
+      stats_24hr: {
+        transactions:useDexPrice ? dex.stats_24hr.transactions : jupiter.stats_24hr.transactions ,
+        volume: useDexPrice ? dex.stats_24hr.volume : jupiter.stats_24hr.volume ,
+      },
+      holders: jupiter.holders ,
       pair_created_at: jupiter.pair_created_at,
       protocol: dex.protocol,
       source: "merged",
