@@ -31,7 +31,7 @@ async function runFetchCycle() {
     const mergedTokens = mergeTokens(dexTokens, jupiterTokens);
     console.log(`merged total: ${mergedTokens.length} tokens`);
 
-    console.log("sample token:", mergedTokens);
+    console.log("tokens:", mergedTokens);
 
   } catch (error) {
     console.error("fetch cycle failed:", error);
