@@ -1,4 +1,5 @@
 import type { Token } from "../src/normalizer.js";
+import { normalizeDexScreenerData, normalizeJupiterData } from "../src/normalizer.js";
 
 export function mergeTokens(
   dexTokens: Token[],

@@ -1,5 +1,5 @@
 import { fetchFromDexScreener } from "../src/dexscreener.js";
-import { fetchFromJupitor } from "../src/jupiter.js";
+import { fetchFromJupiter } from "../src/jupiter.js";
 
 export interface Token {
   token_image: string;
@@ -50,7 +50,7 @@ export const normalizeDexScreenerData = async (): Promise<Token[]> => {
 };
 
 export const normalizeJupiterData = async (): Promise<Token[]> => {
-  const tokens: any[] = await fetchFromJupitor();
+  const tokens: any[] = await fetchFromJupiter();
 
   return tokens
     .filter((token) => token.symbol.includes("SOL"))
