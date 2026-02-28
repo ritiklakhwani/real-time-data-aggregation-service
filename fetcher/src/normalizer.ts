@@ -21,8 +21,7 @@ export interface Token {
   source: string;
 }
 
-export const normalizeDexScreenerData = async (): Promise<Token[]> => {
-  const pairs: any[] = await fetchFromDexScreener();
+export const normalizeDexScreenerData = async (pairs: any[]): Promise<Token[]> => {
 
   return pairs
     .filter(
@@ -49,8 +48,7 @@ export const normalizeDexScreenerData = async (): Promise<Token[]> => {
     }));
 };
 
-export const normalizeJupiterData = async (): Promise<Token[]> => {
-  const tokens: any[] = await fetchFromJupiter();
+export const normalizeJupiterData = async (tokens: any[]): Promise<Token[]> => {
 
   return tokens
     .filter((token) => token.symbol.includes("SOL"))

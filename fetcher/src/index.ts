@@ -7,7 +7,7 @@ import { mergeTokens } from "../src/merger.js";
 
 
 async function runFetchCycle() {
-  console.log("starting fetching tokens");
+  console.log("starting fetch cycle");
 
   try {
     const [rawDex, rawJupiter] = await Promise.allSettled([
@@ -30,6 +30,8 @@ async function runFetchCycle() {
 
     const mergedTokens = mergeTokens(dexTokens, jupiterTokens);
     console.log(`merged total: ${mergedTokens.length} tokens`);
+
+    console.log("sample token:", mergedTokens);
 
   } catch (error) {
     console.error("fetch cycle failed:", error);
