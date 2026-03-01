@@ -33,11 +33,13 @@ async function runFetchCycle() {
     const mergedTokens = mergeTokens(dexTokens, jupiterTokens);
     console.log(`merged total: ${mergedTokens.length} tokens`);
 
-    await redis.set('tokens:solana:latest', JSON.stringify(mergedTokens), { EX: 60 });
+    await redis.set("tokens:solana:latest", JSON.stringify(mergedTokens), {
+      EX: 60,
+    });
 
-    await redis.publish('token:updates', JSON.stringify(mergedTokens));
+    await redis.publish("token:updates", JSON.stringify(mergedTokens));
 
-    console.log('stored and published', mergedTokens.length, 'tokens');
+    console.log("stored and published", mergedTokens.length, "tokens");
   } catch (error) {
     console.error("fetch cycle failed:", error);
   }
