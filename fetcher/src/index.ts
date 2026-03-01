@@ -1,10 +1,12 @@
 import cron from "node-cron";
 import { fetchFromDexScreener } from "../src/dexscreener.js";
 import { fetchFromJupiter } from "../src/jupiter.js";
-import { normalizeDexScreenerData, normalizeJupiterData } from "../src/normalizer.js";
+import {
+  normalizeDexScreenerData,
+  normalizeJupiterData,
+} from "../src/normalizer.js";
 import { mergeTokens } from "../src/merger.js";
-
-
+import { redis } from "../src/redis.js";
 
 async function runFetchCycle() {
   console.log("starting fetch cycle");
@@ -31,8 +33,11 @@ async function runFetchCycle() {
     const mergedTokens = mergeTokens(dexTokens, jupiterTokens);
     console.log(`merged total: ${mergedTokens.length} tokens`);
 
-    console.log("tokens:", mergedTokens);
+    await redis.set('tokens:solana:latest', JSON.stringify(mergedTokens), { EX: 60 });
 
+    await redis.publish('token:updates', JSON.stringify(mergedTokens));
+
+    console.log('stored and published', mergedTokens.length, 'tokens');
   } catch (error) {
     console.error("fetch cycle failed:", error);
   }
