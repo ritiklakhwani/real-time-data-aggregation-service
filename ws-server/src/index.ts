@@ -20,23 +20,6 @@ const clients = new Set<WebSocket>();
 const wss = new WebSocketServer({ port: PORT });
 console.log(`WebSocket server running on port ${PORT}`);
 
-await redisSub.subscribe("token:updates", (message) => {
-  console.log(`got update, broadcasting to ${clients.size} clients`);
-
-  for (const client of clients) {
-    if (client.readyState === WebSocket.OPEN) {
-      client.send(
-        JSON.stringify({
-          type: "price_update",
-          data: JSON.parse(message),
-        }),
-      );
-    }
-  }
-});
-
-console.log("subscribed to token:updates channel");
-
 wss.on("connection", async (ws) => {
   console.log("client connected, total:", clients.size + 1);
   clients.add(ws);
@@ -56,3 +39,20 @@ wss.on("connection", async (ws) => {
     console.log("client disconnected, total:", clients.size);
   });
 });
+
+await redisSub.subscribe("token:updates", (message) => {
+  console.log(`got update, broadcasting to ${clients.size} clients`);
+
+  for (const client of clients) {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(
+        JSON.stringify({
+          type: "price_update",
+          data: JSON.parse(message),
+        }),
+      );
+    }
+  }
+});
+
+console.log("subscribed to token:updates channel");
