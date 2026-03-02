@@ -58,13 +58,13 @@ app.get("/tokens", async (req: Request, res: Response) => {
     return res.status(503).json({ error: "Data not ready yet" });
   }
 
-  const token = JSON.parse(raw);
+  const tokens = JSON.parse(raw);
 
   const sort = (req.query.sort as string) || "volume";
   const period = (req.query.period as string) || "24h";
   const statsKey = getStatsKey(period);
 
-  token.sort((a: Token, b: Token) => {
+  tokens.sort((a: Token, b: Token) => {
     if (sort === "market_cap") return b.market_cap_sol - a.market_cap_sol;
     if (sort === "liquidity") return b.liquidity_sol - a.liquidity_sol;
     if (sort === "transactions")
@@ -83,10 +83,36 @@ app.get("/tokens", async (req: Request, res: Response) => {
     return b[statsKey].volume - a[statsKey].volume;
   });
 
+  const limit = parseInt(req.query.limit as string) || 20;
+  const page = parseInt(req.query.page as string) || 1;
+
+  const start = (page - 1) * limit;
+  const end = start + limit;
+
+  const pageTokens = tokens.slice(start, end);
+
+  res.json({
+    tokens: pageTokens,
+    page: page,
+    total: tokens.length,
+    totalPages: Math.ceil(tokens.length / limit),
+    hasMore: end < tokens.length,
+  });
 });
 
 // get single token by address
-app.get("/tokens/:address", () => {});
+app.get("/tokens/:address", async (req: Request, res: Response) => {
+  const raw = await redis.get(`token:${req.params.address}`);
+
+  if (!raw) {
+    res.status(404).json({ error: "Token not found" });
+    return;
+  }
+
+  const tokenData = JSON.parse(raw);
+
+  res.json(tokenData);
+});
 
 app.listen(PORT, () => {
   console.log(`server running on port ${PORT}`);
