@@ -47,6 +47,6 @@ async function runFetchCycle() {
 
 runFetchCycle();
 
-cron.schedule("*/1/2 * * * * *", runFetchCycle);
+cron.schedule("*/2 * * * * *", runFetchCycle);
 
 console.log("fetcher started");

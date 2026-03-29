@@ -102,16 +102,18 @@ app.get("/tokens", async (req: Request, res: Response) => {
 
 // get single token by address
 app.get("/tokens/:address", async (req: Request, res: Response) => {
-  const raw = await redis.get(`token:${req.params.address}`);
+  const raw = await redis.get("tokens:solana:latest");
 
-  if (!raw) {
-    res.status(404).json({ error: "Token not found" });
-    return;
-  }
+  if (!raw) return res.status(503).json({ error: "Data not ready yet" });
 
-  const tokenData = JSON.parse(raw);
+  const tokens = JSON.parse(raw);
 
-  res.json(tokenData);
+  const token = tokens.find(
+    (t: Token) => t.token_address === req.params.address,
+  );
+  
+  if (!token) return res.status(404).json({ error: "Token not found" });
+  res.json(token);
 });
 
 app.listen(PORT, () => {

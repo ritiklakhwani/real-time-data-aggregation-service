@@ -90,20 +90,20 @@ export const normalizeJupiterData = async (tokens: any[]): Promise<Token[]> => {
   return tokens
     .filter((token) => token.symbol.includes("SOL"))
     .map((token) => ({
-      token_image: token.icon,
-      token_address: token.id,
-      token_name: token.name,
-      token_ticker: token.symbol,
-      price_sol: parseFloat(token.usdPrice) || 0,
-      market_cap_sol: token.mcap || 0,
-      liquidity_sol: token.liquidity || 0,
-      stats_5m: safeStats(token.stats5m),
-      stats_1hr: safeStats(token.stats1h),
-      stats_6hr: safeStats(token.stats6h),
-      stats_24hr: safeStats(token.stats24h),
-      holders: token.holderCount || 0,
-      pair_created_at: token.firstPool.createdAt || null,
-      protocol: "aggregated",
-      source: "jupiter",
-    }));
+    token_image: token.icon,
+    token_address: token.id,
+    token_name: token.name,
+    token_ticker: token.symbol,
+    price_sol: parseFloat(token.usdPrice) || 0,
+    market_cap_sol: token.mcap || 0,
+    liquidity_sol: token.liquidity || 0,
+    stats_5m: safeStats(token.stats5m),
+    stats_1hr: safeStats(token.stats1h),
+    stats_6hr: safeStats(token.stats6h),
+    stats_24hr: safeStats(token.stats24h),
+    holders: token.holderCount || 0,
+    pair_created_at: token.firstPool.createdAt || null,
+    protocol: "aggregated",
+    source: "jupiter",
+  }));
 };
