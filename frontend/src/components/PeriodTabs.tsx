@@ -15,7 +15,7 @@ export function PeriodTabs({ period, onChange }: Props) {
 
   return (
     <div
-      className="flex gap-px p-[3px] rounded-lg bg-surface"
+      className="flex gap-px p-[3px] rounded-lg bg-surface-solid"
       style={{ border: "1px solid rgba(255, 255, 255, 0.06)" }}
       onMouseLeave={() => setHovered(null)}
     >

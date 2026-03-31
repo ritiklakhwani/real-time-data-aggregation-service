@@ -3,15 +3,15 @@ interface Props {
 }
 
 export function TokenChart({ address }: Props) {
-  const src = `https://birdeye.so/tv-widget/${address}?chain=solana&viewMode=pair&chartInterval=15&chartType=CANDLE&chartTimezone=UTC&chartLeftToolbar=show&theme=dark`;
+  const bg = "050506";
+  const src = `https://birdeye.so/tv-widget/${address}?chain=solana&viewMode=pair&chartInterval=15&chartType=CANDLE&chartTimezone=UTC&chartLeftToolbar=show&theme=dark&background=${bg}`;
 
   return (
-    <div className="rounded-lg border border-border overflow-hidden bg-surface-solid">
+    <div className="rounded-lg overflow-hidden bg-bg">
       <iframe
         key={address}
         src={src}
-        className="w-full border-none block"
-        style={{ height: 380 }}
+        className="w-full border-none block h-[280px] sm:h-[340px] lg:h-[380px]"
         loading="lazy"
         allow="clipboard-write"
       />

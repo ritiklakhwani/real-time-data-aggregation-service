@@ -25,7 +25,8 @@ export function TableHeader({ columns, currentSort, onSort }: Props) {
           return (
             <th
               key={col.label}
-              className={`py-1.5 px-2.5 text-[10px] font-medium uppercase tracking-[0.06em] whitespace-nowrap ${align} ${hide} ${
+              style={{ backgroundColor: "#111114" }}
+              className={`py-1.5 px-2.5 text-[10px] font-medium uppercase tracking-[0.06em] whitespace-nowrap sticky top-0 z-10 ${align} ${hide} ${
                 col.sort
                   ? "cursor-pointer select-none hover:text-text-secondary"
                   : ""

@@ -7,7 +7,7 @@ interface Props {
 
 export function Header({ wsStatus }: Props) {
   return (
-    <header className="sticky top-0 z-20 border-b border-border bg-surface">
+    <header className="fixed top-0 left-0 right-0 z-40 border-b border-border panel-glass">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6 h-11 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <svg className="w-4 h-4" viewBox="0 0 397.7 311.7" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -48,8 +48,8 @@ function SkeletonRows() {
 
 export function TokenTable({ tokens, sort, period, onSort, pageOffset, onSelectToken }: Props) {
   return (
-    <div className="overflow-x-auto">
-      <table className="w-full border-collapse">
+    <div className="overflow-x-auto overflow-y-auto flex-1 min-h-0 overscroll-contain">
+      <table className="w-full border-collapse min-w-[480px]">
         <TableHeader columns={columns} currentSort={sort} onSort={onSort} />
         {tokens.length === 0 ? (
           <tbody>

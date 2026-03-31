@@ -3,6 +3,7 @@ import type { Token, PeriodOption, StatsKey } from "../types/token";
 import { periodToStatsKey } from "../types/token";
 import { formatPrice, formatNumber, formatCompact, timeAgo } from "../lib/format";
 import { TokenImage } from "./TokenImage";
+import { RollingPrice } from "./RollingPrice";
 
 interface Props {
   token: Token;
@@ -14,12 +15,10 @@ interface Props {
 export function TokenRow({ token, index, period, onSelect }: Props) {
   const prevPrice = useRef(token.price_sol);
   const [direction, setDirection] = useState<"up" | "down" | null>(null);
-  const [popKey, setPopKey] = useState(0);
 
   useEffect(() => {
     if (prevPrice.current !== token.price_sol && prevPrice.current !== 0) {
       setDirection(token.price_sol > prevPrice.current ? "up" : "down");
-      setPopKey((k) => k + 1);
     }
     prevPrice.current = token.price_sol;
   }, [token.price_sol]);
@@ -54,11 +53,8 @@ export function TokenRow({ token, index, period, onSelect }: Props) {
         </div>
       </td>
       <td className="py-[5px] px-2.5 text-right">
-        <span
-          key={popKey}
-          className={`inline-block text-[12px] font-mono font-semibold tabular-nums transition-colors duration-300 ${priceColor} ${direction ? "price-pop" : ""}`}
-        >
-          ${formatPrice(token.price_sol)}
+        <span className={`text-[12px] font-mono font-semibold tabular-nums transition-colors duration-300 ${priceColor}`}>
+          <RollingPrice value={`$${formatPrice(token.price_sol)}`} direction={direction} />
         </span>
       </td>
       <td className="py-[5px] px-2.5 text-right hidden lg:table-cell">
